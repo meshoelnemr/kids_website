@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href={% static 'Profile/main.css' %}>
+    <link rel="stylesheet" type="text/css" href={% static 'Profile/guest.css' %}>
+</head>
+<body>
+    <ul>
+        <li><a href="{% url 'Profile:index' %}">Home</a></li>
+        <li><a href="{% url 'Profile:register' %}">Register</a></li>
+        <li><a href="{% url 'Profile:login' %}">Login</a></li>
+    </ul>
+{% block body %}
+{% endblock %}
+</body>
+</html>

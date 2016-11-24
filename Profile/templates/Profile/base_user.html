@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href={% static 'Profile/main.css' %}>
+</head>
+<body>
+    <ul>
+        <li><a href={% url 'Profile:index' %}>Profile</a></li>
+        <li><a href={% url 'games:games' %}>Games</a>
+            <ul class="v-list">
+                <li><a href={% url 'games:games' %}>English</a></li><br>
+                <li><a href={% url 'games:math' %}>Math</a></li><br>
+            </ul>
+        </li>
+        <li><a href={% url 'Profile:logout' %}>Logout</a></li>
+    </ul>
+{% block body %}
+{% endblock %}
+</body>
+</html>

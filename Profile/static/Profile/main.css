@@ -1,0 +1,61 @@
+body{
+    background-color: white;
+}
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    overflow: hidden;
+    opacity: .9;
+}
+li a{
+    text-decoration: none;
+    text-align: center;
+    padding: 10px;
+    display: block;
+    width: 60px;
+    color: white;
+    opacity: .7;
+}
+
+li a:hover{
+    background-color: white;
+    color: black;
+}
+
+ul li {
+    float: left;
+}
+
+.dropdown{
+    background: silver;
+    width: 10px;
+    height: 30px; 
+    text-align: center;
+ 
+}
+
+.ddlcontent{
+    display: none;
+    padding: 10px;
+}
+.dropdown:hover .ddlcontent{
+    display: block;
+    background-color: white;
+
+}
+
+ul li:hover ul{
+    display: block;
+    opacity: .9;
+
+}
+
+ul ul{
+    display: none;
+    position: absolute;
+    background-color: black;
+    opacity: .7;
+
+}

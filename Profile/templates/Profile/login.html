@@ -1,0 +1,23 @@
+{% extends 'Profile/base_guest.html' %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+{% block body %}
+	<div class="form" id="div1">
+	    <form action="" method="post">
+	        {% csrf_token %}
+	        <p>Username</p>
+	        <input type="text" name="username">
+	        <p>Password</p>
+	        <input type="Password" name="password"> <br>
+	        <br>
+	        <input type="submit" value="Log In" >
+	    </form>
+	</div>
+
+	{% if error %}
+		<p>{{ error }}</p>
+	{% endif %}
+{% endblock %}
