@@ -1,0 +1,163 @@
+{% extends 'Profile/base_guest.html' %}
+
+
+{% block content %}
+    <style>
+        * {box-sizing:border-box}
+        body {font-family: Verdana,sans-serif;margin:0}
+        .mySlides {display:none}
+
+        .slideshow-container {
+           position: relative;
+            margin: 10%;
+            width: 600px;
+            height: 220px;
+            margin: auto;
+            margin-top: 15%;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 40%;
+
+            padding: 16px;
+            margin-top: -22 px;
+            color: white;
+
+            font-size: 12px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+        }
+
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+        .numbertext {
+            color: #f2f2f2;
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0;
+        }
+
+
+        .dot {
+            cursor:pointer;
+            height: 7px;
+            width: 7px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+            margin-top: .1%;
+        }
+
+        .active, .dot:hover {
+            background-color: #717171;
+        }
+
+        .fade {
+           -webkit-animation-name: fade;
+           -webkit-animation-duration: 1.5s;
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @-webkit-keyframes fade {
+          from {opacity: .4}
+          to {opacity: 1}
+        }
+
+        @keyframes fade {
+          from {opacity: .4}
+          to {opacity: 1}
+        }
+
+
+
+        </style>
+    <div class="container">
+        {% load staticfiles%}
+        <div class="slideshow-container">
+
+        <div class="mySlides fade" >
+          <div class="numbertext">1 / 6</div>
+          <img src={% static 'Profile/images/pro8.jpg' %} style="width:100%">
+        </div>
+
+        <div class="mySlides fade">
+          <div class="numbertext">2 / 6</div>
+          <img src={% static 'Profile/images/pro5.jpg' %} style="width:100%">
+        </div>
+
+        <div class="mySlides fade">
+          <div class="numbertext">3 / 6</div>
+          <img src={% static 'Profile/images/pro1.jpg' %} style="width:100%">
+        </div>
+        <div class="mySlides fade">
+          <div class="numbertext">4 / 6</div>
+          <img src={% static 'Profile/images/pro2.jpg' %} style="width:100%">
+        </div>
+        <div class="mySlides fade">
+          <div class="numbertext">5 / 6</div>
+          <img src={% static 'Profile/images/pro6.jpg' %} style="width:100%">
+        </div>
+        <div class="mySlides fade">
+          <div class="numbertext">6 / 6</div>
+          <img src={% static 'Profile/images/pro7.jpg' %} style="width:100%">
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1)">❮</a>
+        <a class="next" onclick="plusSlides(1)">❯</a>
+
+        </div>
+        <br>
+
+        <div style="text-align:center">
+          <span class="dot" onclick="currentSlide(1)"></span>
+          <span class="dot" onclick="currentSlide(2)"></span>
+          <span class="dot" onclick="currentSlide(3)"></span>
+          <span class="dot" onclick="currentSlide(4)"></span>
+          <span class="dot" onclick="currentSlide(5)"></span>
+          <span class="dot" onclick="currentSlide(6)"></span>
+        </div>
+
+        <script>
+        /*var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+          showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+          showSlides(slideIndex = n);
+        }
+        }*/
+
+        var slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex> slides.length) {slideIndex = 1}
+            slides[slideIndex-1].style.display = "block";
+            setTimeout(showSlides, 5000);
+        }
+
+        </script>
+    </div>
+{% endblock %}

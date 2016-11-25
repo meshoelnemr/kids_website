@@ -5,11 +5,13 @@
 {% endblock %}
 
 
-{% block body %}
-    <p>Games</p>
-    <ul>
-        {% for game in games %}
-            <li><a href="/{{ game.name }}">{{ game.name }}</a></li>
-        {% endfor %}
-    </ul>
+{% block content %}
+    <div class="container">
+        <p>Games</p>
+        <ul>
+            {% for game in games %}
+                <li><a href="{{ game.name }}">{{ game.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

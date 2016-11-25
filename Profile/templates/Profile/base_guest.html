@@ -1,21 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>
-        {% block title %}
-        {% endblock %}
-    </title>
-    {% load staticfiles %}
-    <link rel="stylesheet" type="text/css" href={% static 'Profile/main.css' %}>
-    <link rel="stylesheet" type="text/css" href={% static 'Profile/guest.css' %}>
+    <title>{{ title }}</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load staticfiles%}
+    <link rel="stylesheet" type="text/css" href={% static 'Profile/css/bootstrap.min.css' %}>
+    <script type="text/javascript" src={% static 'Profile/js/jquery-3.1.1.min.js' %}></script>
+	<script type="text/javascript" src={% static 'Profile/js/bootstrap.min.js' %}></script>
+    <style>
+        .navbar{border-radius: 0px;}
+    </style>
+    <script type="text/javascript">
+		$(function(){
+	    $(".dropdown").hover(
+	            function() {
+	                $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
+	                $(this).toggleClass('open');
+	                $('b', this).toggleClass("caret caret-up");
+	            },
+	            function() {
+	                $('.dropdown-menu', this).stop( true, true ).fadeOut("fast");
+	                $(this).toggleClass('open');
+	                $('b', this).toggleClass("caret caret-up");
+	            });
+	    });
+	</script>
 </head>
 <body>
-    <ul>
-        <li><a href="{% url 'Profile:index' %}">Home</a></li>
-        <li><a href="{% url 'Profile:register' %}">Register</a></li>
-        <li><a href="{% url 'Profile:login' %}">Login</a></li>
-    </ul>
-{% block body %}
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div>
+            <!-- left part -->
+            <ul class="nav navbar-nav">
+                <li><a href={% url 'Profile:index' %}><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                <li><a href={% url 'Profile:login' %}>Login</a></li>
+                <li><a href={% url 'Profile:register' %}>Register</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% block content %}
 {% endblock %}
+
 </body>
 </html>
