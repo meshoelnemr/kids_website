@@ -7,8 +7,8 @@ from functools import wraps
 import re
 
 
-UNAME_RE = re.compile(r'[0-9a-zA-z_]+')
-EMAIL_RE = re.compile(r'[0-9a-zA-z_-]+@[0-9a-zA-z_-]+')
+UNAME_RE = re.compile(r'^[0-9a-zA-z_-]+$')
+EMAIL_RE = re.compile(r'^[0-9a-zA-z_-]+@[a-zA-Z0-9]([a-zA-Z0-9-]*\.)+[a-z]{2,}$')
 
 
 def verified(func):
@@ -138,6 +138,7 @@ def log_in(request):
                 context['message'] = 'Account is disabled.'
         else:
             context['message'] = 'Invalid username or password.'
+            context['username'] = username
     return render(request, 'Profile/login.html', context)
 
 
