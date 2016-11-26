@@ -8,5 +8,8 @@ urlpatterns = [
     url(r'^$', views.games, name='games'),
 
     # Math game
-    url(r'^math/$', views.math, name='math')
+    url(r'^math/$', views.math, name='math'),
+
+    # English game
+    url(r'^english/$', views.games, name='english'),
 ]
