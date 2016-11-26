@@ -4,13 +4,22 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
 from .forms import UserForm
 from functools import wraps
+import logging
 import re
 
 
+# Loggers
+misc_logger = logging.getLogger('misc')
+login_logger = logging.getLogger('login')
+register_logger = logging.getLogger('register')
+
+
+# Regular Expressions
 UNAME_RE = re.compile(r'^[0-9a-zA-z_-]+$')
 EMAIL_RE = re.compile(r'^[0-9a-zA-z_-]+@[a-zA-Z0-9]([a-zA-Z0-9-]*\.)+[a-z]{2,}$')
 
 
+# Session check decorators
 def verified(func):
     @wraps(func)
     def inner(request, *args, **kwargs):
@@ -33,8 +42,14 @@ def notverified(func):
 
 def index(request):
     if not request.user.is_authenticated():
-        print(request.META.get('REMOTE_ADDR'))
+        # Log
+        misc_logger.info('%-15s | GET /' % (request.META.get('REMOTE_ADDR')))
+        # End log
         return render(request, 'Profile/home.html', {'title': 'Complec City'})
+
+    # Log
+    misc_logger.info('%-15s | GET / (%s)' % (request.META.get('REMOTE_ADDR'), request.user.username))
+    # End log
     return render(request, 'Profile/profile.html')
 
 
@@ -46,11 +61,20 @@ def register(request):
         # Check form fields
         context = invalid_data(post)
         if context:
+            # Log
+            register_logger.info('%-15s | %-9s registeration' % (request.META.get('REMOTE_ADDR'), 'failed'))
+            # End log
             return render(request, 'Profile/register.html', context)
 
+        # Log
+        register_logger.info('%-15s | %-9s registeration' % (request.META.get('REMOTE_ADDR'), 'finished'))
+        # End log
         # Create user and redirect to Profile
         return create_user(request, post)
 
+    # Log
+    misc_logger.info('%-15s | /register/' % (request.META.get('REMOTE_ADDR')))
+    # End log
     return render(request, 'Profile/register.html', {'title': 'Register an account'})
 
 
@@ -127,23 +151,39 @@ def log_in(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
+        ip = request.META.get('REMOTE_ADDR')
 
         user = authenticate(username=username, password=password)
 
         if user:
             if user.is_active:
+                # Log
+                login_logger.info('%-15s | %-7s login username: %s' % (ip, 'valid', username))
+                # End log
+
                 login(request, user)
                 return redirect('Profile:index')
             else:
                 context['message'] = 'Account is disabled.'
         else:
+            # Log
+            login_logger.info('%-15s | %-7s login username: %s' % (ip, 'invalid', username))
+            # End log
+
             context['message'] = 'Invalid username or password.'
             context['username'] = username
+
+    # Log
+    misc_logger.info('%-15s | /login/' % (request.META.get('REMOTE_ADDR')))
+    # End log
     return render(request, 'Profile/login.html', context)
 
 
 @verified
 def log_out(request):
     logout(request)
+    # Log
+    misc_logger.info('%-15s | /logout/' % (request.META.get('REMOTE_ADDR')))
+    # End log
     return redirect('Profile:index')
 
