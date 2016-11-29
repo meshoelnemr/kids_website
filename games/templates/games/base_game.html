@@ -5,15 +5,19 @@
         <div class="row">
             <div class="col-md-8">
                 <h3 class="mark" title='{{ game.description }}'>{{ game.name }}</h3>
+                {% block play %}
+                {% endblock %}
             </div>
 
             <div class="cold-md-4">
-                    <h3 class="mark col-md-1">Score:</h3>
-                    <h3 class="mark text-right col-md-3">{{ score.value }}</h3>
+                <h3 class="mark col-md-1">Score:</h3>
+                <h3 class="mark text-right col-md-3">{{ score.value }}</h3>
+
+                <a href="{% url 'games:highscores' game.id %}">
+                    <h3 class="mark col-md-2">Highscore:</h3>
+                    <h3 class="mark text-right col-md-2">{{ value__max }}</h3>
+                </a>
             </div>
         </div>
-
-        {% block play %}
-        {% endblock %}
     </div>
 {% endblock %}

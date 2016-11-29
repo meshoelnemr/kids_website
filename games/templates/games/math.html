@@ -2,33 +2,29 @@
 
 {% block play %}
     <div class="container">
-        <h2>Find the correct operation</h2>
-        <blockquote>
-            <p>
-                <span class="glyphicon glyphicon-record"></span> allowed operators: +, - and *.
-            </p>
-        </blockquote>
+        <h2>Choose the right number.</h2>
         <div class="text-center">
             <form class="form-inline" autocomplete="off" action="" method="post">
                 {% csrf_token %}
                 <div class="form-group row">
                     <p class="form-control col-md-1">{{ val1 }}</p>
-                    <input class="form-control col-md-1" maxlength="1" style="width: 35px;" name="operator">
-                    <p class="form-control col-md-1">{{ val2 }}</p>
+                    <p class="form-control col-md-1" style="width: 35px;">{{ operator }}</p>
+                    <input class="form-control col-md-1" maxlength="1" style="width: 35px;" name="" disabled="disabled">
                     <p class="form-control col-md-1">=</p>
-                    <p class="form-control col-md-1">{{ result }}</p>
+                    <p class="form-control col-md-1">{{ val3 }}</p>
                 </div>
 
                 <div class="row">
-                    <button class="btn btn-danger" type="reset">Reset</button>
-                    <button class="btn btn-success" type="submit">Submit</button>
+                    <button class="btn btn-info" type="submit" name="answer" value="{{ ans1 }}">{{ ans1 }}</button>
+                    <button class="btn btn-info" type="submit" name="answer" value="{{ ans2 }}">{{ ans2 }}</button>
+                    <button class="btn btn-info" type="submit" name="answer" value="{{ ans3 }}">{{ ans3 }}</button>
                 </div>
             </form>
 
             {% if success %}
             <p class="text-success" style="margin-top: 20px"><span class="glyphicon glyphicon-ok"></span> Good Job.</p>
             {% elif failure %}
-            <p class="text-danger" style="margin-top: 20px"><span class="glyphicon glyphicon-remove"></span> Try again.</p>
+            <p class="text-danger" style="margin-top: 20px"><span class="glyphicon glyphicon-remove"></span> Wrong answer.</p>
             {% endif %}
         </div>
     </div>

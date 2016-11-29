@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Max
 from Profile.views import verified
 from .models import Game, Score
-from django.core.exceptions import ObjectDoesNotExist
-from random import randint
+from random import randint, shuffle
 
 
 @verified
@@ -17,7 +18,7 @@ def math(request):
     game_name = 'Math game'
     game = Game.objects.get(name=game_name)
 
-    context = {}
+    context = game.score_set.all().aggregate(Max('value'))
 
     try:
         score = user.score_set.get(game=game)
@@ -25,13 +26,14 @@ def math(request):
         score = Score(user=user, game=game)
         score.save()
 
-    context['game']  = game
+    context['game'] = game
     context['score'] = score
 
     if request.method == 'POST':
-        operation = request.POST.get('operator')
-        print(operation)
-        if operation == request.session['operator']:
+        result = request.POST.get('answer')
+        print(repr(result))
+        print(repr(request.session['answer']))
+        if result == request.session['answer']:
             score.value += 1
             score.save()
             context['success'] = True
@@ -39,29 +41,52 @@ def math(request):
             context['failure'] = True
 
     # Generate new values
-    val1 = randint(1, 50)
-    val2 = randint(1, 50)
+    con, result = generate_math()
+    request.session['answer'] = str(result)
+
+    context.update(con)
+    return render(request, 'games/math.html', context)
+
+
+def generate_math():
+    context = {}
+
+    val1 = randint(1, 20)
+    val2 = randint(1, 20)
 
     operation = randint(0, 2)
 
     if operation == 0:
-        request.session['operator'] = '+'
-        result = val1 + val2
+        context['operator'] = '+'
+        val3 = val1 + val2
     elif operation == 1:
         if val1 < val2:
             val1, val2 = val2, val1
-
-        request.session['operator'] = '-'
-        result = val1 - val2
+        context['operator'] = '-'
+        val3 = val1 - val2
     else:
-        request.session['operator'] = '*'
-        result = val1 * val2
+        context['operator'] = 'x'
+        val3 = val1 * val2
 
     context['val1'] = val1
-    context['val2'] = val2
-    context['result'] = result
+    context['val3'] = val3
 
-    return render(request, 'games/math.html', context)
+    # generate false answers
+    l = [randint(1, 20), randint(1, 20)]
+    while val2 in l or l[0] == l[1]:
+        if l[0] == val2:
+            l[0] = randint(1, 20)
+        elif l[1] == val2:
+            l[1] = randint(1, 20)
+        else:
+            l[0] = randint(1, 20)
+
+    l += [val2]
+    shuffle(l)
+
+    context['ans1'], context['ans2'], context['ans3'] = l
+
+    return context, val2
 
 # def default(game_name):
 #     def decorator(func):
@@ -90,3 +115,11 @@ def math(request):
 # @default('Math game')
 # def math(request):
 #     return 'Hola'
+
+@verified
+def high_scores(request, game_id):
+    game = get_object_or_404(Game, pk=game_id)
+
+    # Top 50
+    scores = game.score_set.order_by('-value')[:50]
+    return render(request, 'games/highscores.html', {'game': game, 'scores': scores})
