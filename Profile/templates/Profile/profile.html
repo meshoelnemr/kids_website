@@ -1,5 +1,37 @@
 {% extends 'Profile/base_user.html' %}
 
 
-{% block body %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                {% load staticfiles %}
+                <img class="img-responsive img-thumbnail" src="/{{ user.picture.image }}" width="165" height="165">
+            </div>
+            <div class="col-md-10">
+                {% if user.first_name and user.last_name %}
+                    <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+                {% else %}
+                    <h2>{{ user.username }}</h2>
+                {% endif %}
+
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Game</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for score in user.score_set.all %}
+                            <tr>
+                                <td>{{ score.game.name }}</td>
+                                <td>{{ score.value }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}

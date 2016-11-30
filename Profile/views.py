@@ -187,3 +187,7 @@ def log_out(request):
     # End log
     return redirect('Profile:index')
 
+
+@verified
+def settings(request):
+    return render(request, 'Profile/settings.html')

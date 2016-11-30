@@ -18,7 +18,7 @@ def math(request):
     game_name = 'Math game'
     game = Game.objects.get(name=game_name)
 
-    context = game.score_set.all().aggregate(Max('value'))
+    context = {}
 
     try:
         score = user.score_set.get(game=game)
@@ -45,6 +45,7 @@ def math(request):
     request.session['answer'] = str(result)
 
     context.update(con)
+    context.update(game.score_set.all().aggregate(Max('value')))
     return render(request, 'games/math.html', context)
 
 

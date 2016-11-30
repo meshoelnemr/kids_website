@@ -13,8 +13,8 @@ urlpatterns = [
     # Login
     url(r'^login/$', views.log_in, name='login'),
 
-    # Settings temp -> no code yet
-    url(r'^settings/$', views.index, name='settings'),
+    # Settings
+    url(r'^settings/$', views.settings, name='settings'),
 
     # Logout
     url(r'^logout/$', views.log_out, name='logout'),
