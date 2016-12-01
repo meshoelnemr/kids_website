@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
-from .forms import UserForm
+from .forms import UserForm, SettingsForm
+from .models import Picture
 from functools import wraps
 import logging
 import re
+import os
 
 
 # Loggers
@@ -190,4 +192,42 @@ def log_out(request):
 
 @verified
 def settings(request):
-    return render(request, 'Profile/settings.html')
+    if request.method == 'POST':
+        form = SettingsForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            image = form.cleaned_data['image']
+
+            user = request.user
+
+            if first_name:
+                user.first_name = first_name.lower().capitalize()
+            if last_name:
+                user.last_name = last_name.lower().capitalize()
+            if image:
+                fname = 'media/' + user.username + os.path.splitext(image.name)[1]
+                save_image(fname, image)
+
+                try:
+                    picture = user.picture
+                except ObjectDoesNotExist:
+                    user.picture = Picture(user=user)
+                    picture = user.picture
+
+                picture.image = fname
+                picture.save()
+
+            user.save()
+            return redirect('Profile:index')
+    else:
+        form = SettingsForm()
+
+    return render(request, 'Profile/settings.html', {'form': form})
+
+
+def save_image(name, f):
+    with open(name, 'wb') as fp:
+        for chunk in f.chunks():
+            fp.write(chunk)

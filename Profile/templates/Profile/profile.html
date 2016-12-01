@@ -6,10 +6,16 @@
         <div class="row">
             <div class="col-md-2">
                 {% load staticfiles %}
-                <img class="img-responsive img-thumbnail" src="/{{ user.picture.image }}" width="165" height="165">
+                <img class="img-responsive img-thumbnail"
+                     {% if user.picture %}
+                     src="{{ user.picture.image }}"
+                     {% else %}
+                     src="{% static 'Profile/images/default.png' %}"
+                     {% endif %}
+                     width="165" height="165">
             </div>
             <div class="col-md-10">
-                {% if user.first_name and user.last_name %}
+                {% if user.first_name %}
                     <h2>{{ user.first_name }} {{ user.last_name }}</h2>
                 {% else %}
                     <h2>{{ user.username }}</h2>
