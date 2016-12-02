@@ -89,33 +89,6 @@ def generate_math():
 
     return context, val2
 
-# def default(game_name):
-#     def decorator(func):
-#         @wraps(func)
-#         def inner(request, *args, **kwargs):
-#             user = request.user
-#             game = Game.objects.get(name=game_name)
-#
-#             try:
-#                 score = user.score_set.get(game=game)
-#             except ObjectDoesNotExist:
-#                 score = Score(user=user, game=game)
-#                 score.save()
-#
-#             result = func(request, *args, **kwargs)
-#
-#             return render(request, 'games/%s.html' % game_name, {
-#                 'game': game,
-#                 'score': score,
-#             })
-#         return inner
-#     return decorator
-#
-#
-# @verified
-# @default('Math game')
-# def math(request):
-#     return 'Hola'
 
 @verified
 def high_scores(request, game_id):
