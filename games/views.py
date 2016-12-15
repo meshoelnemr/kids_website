@@ -6,10 +6,21 @@ from .models import Game, Score
 from random import randint, shuffle
 
 
+WORDS_SON = {
+    0: 'Ball',
+    1: 'Bird',
+    2: 'Cat',
+    3: 'Rabbit',
+    4: 'Tree',
+    5: 'Dog',
+    6: 'Chair',
+    7: 'Table',
+}
+
+
 @verified
 def games(request):
-    allgames = Game.objects.all()
-    return render(request, 'games/games.html', {'games': allgames})
+    return render(request, 'games/games.html')
 
 
 @verified
@@ -31,8 +42,7 @@ def math(request):
 
     if request.method == 'POST':
         result = request.POST.get('answer')
-        print(repr(result))
-        print(repr(request.session['answer']))
+
         if result == request.session['answer']:
             score.value += 1
             score.save()
@@ -88,6 +98,62 @@ def generate_math():
     context['ans1'], context['ans2'], context['ans3'] = l
 
     return context, val2
+
+
+@verified
+def english(request):
+    user = request.user
+    game_name = 'English game'
+    game = Game.objects.get(name=game_name)
+
+    context = {}
+
+    try:
+        score = user.score_set.get(game=game)
+    except ObjectDoesNotExist:
+        score = Score(user=user, game=game)
+        score.save()
+
+    context['game'] = game
+    context['score'] = score
+
+    if request.method == 'POST':
+        result = request.POST.get('answer')
+
+        if result == request.session['answer']:
+            score.value += 1
+            score.save()
+            context['success'] = True
+        else:
+            context['failure'] = True
+
+    # Generate new values
+    con, result = generate_english()
+    request.session['answer'] = str(result)
+
+    context.update(con)
+    context.update(game.score_set.all().aggregate(Max('value')))
+    return render(request, 'games/english.html', context)
+
+
+def generate_english():
+    context = {}
+    quiz = randint(0, 4)
+
+    answers = set([quiz])
+    while len(answers) < 4:
+        answers.add(randint(0, 7))
+
+    answers = list(answers)
+    shuffle(answers)
+
+    context['quiz'] = quiz
+    context['ans0'] = WORDS_SON[answers[0]]
+    context['ans1'] = WORDS_SON[answers[1]]
+    context['ans2'] = WORDS_SON[answers[2]]
+    context['ans3'] = WORDS_SON[answers[3]]
+
+    return context, WORDS_SON[quiz]
 
 
 @verified

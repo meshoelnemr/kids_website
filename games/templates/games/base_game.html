@@ -1,23 +1,36 @@
 {% extends 'Profile/base_user.html' %}
 
 {% block content %}
-    <div class="container">
+    <div class="container bone">
         <div class="row">
             <div class="col-md-8">
-                <h3 class="mark" title='{{ game.description }}'>{{ game.name }}</h3>
+                <div class="row">
+                    <h3 class="label label-default col-md-12" style="font-size: 25px;">
+                        <span class="pull-left">{{ game.name }}</span>
+                    </h3>
+                </div>
+
                 {% block play %}
                 {% endblock %}
             </div>
 
             <div class="cold-md-4">
-                <h3 class="mark col-md-1">Score:</h3>
-                <h3 class="mark text-right col-md-3">{{ score.value }}</h3>
+                <h3 class="label label-default col-md-4" style="font-size: 25px;">
+                    <span class="pull-left">Score:</span>
+                    <span class="pull-right">{{ score.value }}</span>
+                </h3>
+
+                <br>
+                <br>
 
                 <a href="{% url 'games:highscores' game.id %}">
-                    <h3 class="mark col-md-2">Highscore:</h3>
-                    <h3 class="mark text-right col-md-2">{{ value__max }}</h3>
+                    <button class="btn btn-info col-md-4" style="font-size: 22px;">
+                        <span class="pull-left">Highscore:</span>
+                        <span class="pull-right">{{ value__max }}</span>
+                    </button>
                 </a>
             </div>
+
         </div>
     </div>
 {% endblock %}

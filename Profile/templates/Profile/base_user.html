@@ -11,51 +11,36 @@
     <script type="text/javascript" src={% static 'Profile/js/jquery-3.1.1.min.js' %}></script>
 	<script type="text/javascript" src={% static 'Profile/js/bootstrap.min.js' %}></script>
     <style>
-        .navbar{border-radius: 0px;}
+        @font-face {
+            font-family: "Bone";
+            src: url({% static 'Profile/fonts/FunnyBoneJF.ttf' %});
+        }
+        body{
+            background: url({% static 'Profile/images/background.jpg' %}) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+        .btn-lg{
+            font-size: 60px;
+            border-radius: 60px;
+        }
+        .bone{
+            font-family: "Bone";
+        }
     </style>
-    <script type="text/javascript">
-		$(function(){
-	    $(".dropdown").hover(
-	            function() {
-	                $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
-	                $(this).toggleClass('open');
-	                $('b', this).toggleClass("caret caret-up");
-	            },
-	            function() {
-	                $('.dropdown-menu', this).stop( true, true ).fadeOut("fast");
-	                $(this).toggleClass('open');
-	                $('b', this).toggleClass("caret caret-up");
-	            });
-	    });
-	</script>
 </head>
 <body>
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div>
-            <!-- left part -->
-            <ul class="nav navbar-nav">
-                <li class=""><a href={% url 'Profile:index' %}><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-                <li class="dropdown">
-                    <a href={% url 'games:games' %}>Games <span class="glyphicon glyphicon-menu-down"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href={% url 'games:math' %}>Math game</a></li>
-                        <li><a href={% url 'games:games' %}>English game</a></li>
-                    </ul>
-                </li>
-            </ul>
-
-            <!-- right part -->
-            <ul class="nav navbar-nav navbar-right">
-                <li style="margin-right: 20px;"><a href={% url 'Profile:settings' %}><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-                <li style="margin-right: 20px;"><a href={% url 'Profile:logout' %}><span class="glyphicon glyphicon-off"></span> Logout</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
+<div class="row">
+            <a href="{% url 'Profile:index' %}">
+                <button class="btn btn-success">
+                    <span class="btn glyphicon glyphicon-home"></span>
+                    <span class="bone">Home</span>
+                </button>
+            </a>
+</div>
 {% block content %}
 {% endblock %}
-
 </body>
 </html>

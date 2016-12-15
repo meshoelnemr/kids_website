@@ -4,8 +4,11 @@ from . import views
 app_name = 'Profile'
 
 urlpatterns = [
-    # Home / profile
+    # Home
     url(r'^$', views.index, name='index'),
+
+    # Profile
+    url(r'^profile/$', views.profile, name='profile'),
 
     # Register
     url(r'^register/$', views.register, name='register'),

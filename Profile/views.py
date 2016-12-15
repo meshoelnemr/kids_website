@@ -37,7 +37,12 @@ def notverified(func):
 
 def index(request):
     if not request.user.is_authenticated():
-        return render(request, 'Profile/home.html', {'title': 'Complec City'})
+        return render(request, 'Profile/home_guest.html', {'title': 'Complec City'})
+    return render(request, 'Profile/home_user.html')
+
+
+@verified
+def profile(request):
     return render(request, 'Profile/profile.html')
 
 

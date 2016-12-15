@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^math/$', views.math, name='math'),
 
     # English game
-    url(r'^english/$', views.games, name='english'),
+    url(r'^english/$', views.english, name='english'),
 
     # Hgih scores
     url(r'^highscores/(?P<game_id>\d+)/$', views.high_scores, name='highscores'),

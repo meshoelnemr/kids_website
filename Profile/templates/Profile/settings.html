@@ -4,31 +4,36 @@
 
 {% block content %}
     <div class="container">
-        <form class="form-horizontal" autocomplete="off" action="" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {% for field in form %}
-                <div class="form-group row">
-                    <label class="control-label col-md-2" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    <div class="col-md-6">
-                        {% if 'File' in field|klass %}
-                            {{ field }}
-                        {% else %}
-                            {{ field | addclass:'form-control' }}
+        <div class="row"><br><br></div>
+        <div class="panel">
+            <div class="row"><br><br></div>
+            <form class="form-horizontal" autocomplete="off" action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group row">
+                        <label class="control-label col-md-2" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        <div class="col-md-6">
+                            {% if 'File' in field|klass %}
+                                {{ field }}
+                            {% else %}
+                                {{ field | addclass:'form-control' }}
+                            {% endif %}
+                        </div>
+                        {% if field.errors %}
+                        <p class="text-danger form-control-static col-md-4">
+                            <span class="glyphicon glyphicon-remove"></span> {{ field.errors.0 }}
+                        </p>
                         {% endif %}
                     </div>
-                    {% if field.errors %}
-                    <p class="text-danger form-control-static col-md-4">
-                        <span class="glyphicon glyphicon-remove"></span> {{ field.errors.0 }}
-                    </p>
-                    {% endif %}
-                </div>
-            {% endfor %}
+                {% endfor %}
 
-            <div class="container">
-                <div class="form-group col-md-10">
-                    <button class="btn btn-success center-block" type="submit">Submit</button>
+                <div class="container">
+                    <div class="form-group col-md-10">
+                        <button class="btn btn-success center-block" type="submit">Submit</button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+            <div class="row"><br><br></div>
+        </div>
     </div>
 {% endblock %}

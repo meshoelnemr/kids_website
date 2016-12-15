@@ -1,0 +1,46 @@
+{% extends 'games/base_game.html' %}
+
+{% load staticfiles %}
+{% block play %}
+    <div class="container">
+        <div class="text-center">
+            <form class="form" autocomplete="off" action="" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <br>
+                </div>
+
+                <div class="row">
+                    <img class="col-md-3" src="/static/games/{{ quiz }}.jpg" width="200" height="200">
+                </div>
+
+                <div class="row">
+                    <br>
+                </div>
+
+                <div class="row">
+                    <button class="btn btn-info col-md-2" type="submit" name="answer" value="{{ ans0 }}">{{ ans0 }}</button>
+                    <span class="col-md-2"></span>
+                    <button class="btn btn-info col-md-2" type="submit" name="answer" value="{{ ans1 }}">{{ ans1 }}</button>
+                </div>
+                <div class="row">
+                    <br>
+                    <br>
+                </div>
+                <div class="row">
+                    <button class="btn btn-info col-md-2" type="submit" name="answer" value="{{ ans2 }}">{{ ans2 }}</button>
+                    <span class="col-md-2"></span>
+                    <button class="btn btn-info col-md-2" type="submit" name="answer" value="{{ ans3 }}">{{ ans3 }}</button>
+                </div>
+            </form>
+
+            <div class="col-md-6">
+                {% if success %}
+                <p class="text-success" style="margin-top: 20px"><span class="glyphicon glyphicon-ok"></span> Good Job.</p>
+                {% elif failure %}
+                <p class="text-danger" style="margin-top: 20px"><span class="glyphicon glyphicon-remove"></span> Wrong answer.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
