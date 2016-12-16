@@ -188,7 +188,7 @@ def settings(request):
                 picture.save()
 
             user.save()
-            return redirect('Profile:index')
+            return redirect('Profile:profile')
     else:
         form = SettingsForm()
 
