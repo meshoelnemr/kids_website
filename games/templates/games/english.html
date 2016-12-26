@@ -11,7 +11,7 @@
                 </div>
 
                 <div class="row">
-                    <img class="col-md-3" src="/static/games/{{ quiz }}.jpg" width="200" height="200">
+                    <img class="col-md-3 col-xs-3" src="/static/games/{{ quiz }}.jpg" width="200" height="200">
                 </div>
 
                 <div class="row">
@@ -19,22 +19,22 @@
                 </div>
 
                 <div class="row">
-                    <button class="btn btn-info col-md-2" type="submit" name="answer" value="{{ ans0 }}">{{ ans0 }}</button>
-                    <span class="col-md-2"></span>
-                    <button class="btn btn-info col-md-2" type="submit" name="answer" value="{{ ans1 }}">{{ ans1 }}</button>
+                    <button class="btn btn-info col-md-2 col-xs-2" type="submit" name="answer" value="{{ ans0 }}">{{ ans0 }}</button>
+                    <span class="col-md-2 col-xs-2"></span>
+                    <button class="btn btn-info col-md-2 col-xs-2" type="submit" name="answer" value="{{ ans1 }}">{{ ans1 }}</button>
                 </div>
                 <div class="row">
                     <br>
                     <br>
                 </div>
                 <div class="row">
-                    <button class="btn btn-info col-md-2" type="submit" name="answer" value="{{ ans2 }}">{{ ans2 }}</button>
-                    <span class="col-md-2"></span>
-                    <button class="btn btn-info col-md-2" type="submit" name="answer" value="{{ ans3 }}">{{ ans3 }}</button>
+                    <button class="btn btn-info col-md-2 col-xs-2" type="submit" name="answer" value="{{ ans2 }}">{{ ans2 }}</button>
+                    <span class="col-md-2 col-xs-2"></span>
+                    <button class="btn btn-info col-md-2 col-xs-2" type="submit" name="answer" value="{{ ans3 }}">{{ ans3 }}</button>
                 </div>
             </form>
 
-            <div class="col-md-6">
+            <div class="col-md-6 col-xs-6">
                 {% if success %}
                 <p class="text-success" style="margin-top: 20px"><span class="glyphicon glyphicon-ok"></span> Good Job.</p>
                 {% elif failure %}

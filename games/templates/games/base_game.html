@@ -3,33 +3,36 @@
 {% block content %}
     <div class="container bone">
         <div class="row">
-            <div class="col-md-8">
-                <div class="row">
-                    <h3 class="label label-default col-md-12" style="font-size: 25px;">
-                        <span class="pull-left">{{ game.name }}</span>
-                    </h3>
-                </div>
-
-                {% block play %}
-                {% endblock %}
+            <div class="col-md-8 col-xs-8">
+                <h3 class="label label-default col-md-12 col-xs-12" style="font-size: 25px;">
+                    <span class="pull-left">{{ game.name }}</span>
+                </h3>
             </div>
 
             <div class="cold-md-4">
-                <h3 class="label label-default col-md-4" style="font-size: 25px;">
+                <h3 class="label label-default col-md-4 col-xs-4" style="font-size: 25px;">
                     <span class="pull-left">Score:</span>
                     <span class="pull-right">{{ score.value }}</span>
                 </h3>
+            </div>
+        </div>
 
-                <br>
-                <br>
-
+        <div class="row">
+            <div class="col-md-8 col-xs-8"></div>
+            <div class="col-md-4 col-xs-4" style="padding: 0;">
                 <a href="{% url 'games:highscores' game.id %}">
-                    <button class="btn btn-info col-md-4" style="font-size: 22px;">
+                    <button class="btn btn-info col-md-12 col-xs-12" style="font-size: 22px;">
                         <span class="pull-left">Highscore:</span>
                         <span class="pull-right">{{ value__max }}</span>
                     </button>
                 </a>
             </div>
+        </div>
+
+                {% block play %}
+                {% endblock %}
+
+
 
         </div>
     </div>
